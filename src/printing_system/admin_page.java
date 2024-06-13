@@ -1,4 +1,3 @@
-
 package printing_system;
 
 import java.awt.BorderLayout;
@@ -36,37 +35,35 @@ import raven.toast.Notifications;
  * @author Administrator
  */
 public final class admin_page extends javax.swing.JFrame {
-    
-        private static final String username = "root";
-        private static final String password = "PHW#84#jeor";
-        private static final String dataConn = "jdbc:mysql://localhost:3306/printing_db";
 
-        private static PreparedStatement pst = null;
-        private static ResultSet rs = null;
-        private static Connection sqlConn = null;
-    
+    private static final String username = "root";
+    private static final String password = "PHW#84#jeor";
+    private static final String dataConn = "jdbc:mysql://localhost:3306/printing_db";
+
+    private static PreparedStatement pst = null;
+    private static ResultSet rs = null;
+    private static Connection sqlConn = null;
+
     /**
      * Creates new form admin_page
      */
     public admin_page() throws SQLException {
         initComponents();
         addPlaceHolderStyle(txt_search);
-        Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-Bold.ttf", 14f);
-        setFontToComponents(poppinsFont);
+        //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-Bold.ttf", 14f);
+        //setFontToComponents(poppinsFont);
         showPieChart();
-        showTable(); 
+        showTable();
         resizedImage();
         showTotalCustomer();
         showTotalNumberOfSales();
     }
-    
-    
-    
-    public void resizedImage(){
-        String imagePath = "C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\images\\433462721_1200356788003247_6885369636163256273_n.png";
+
+    public void resizedImage() {
+        String imagePath = "C:\\Users\\Administrator\\Desktop\\NetBeansProjects\\LoginSystem\\src\\images\\433462721_1200356788003247_6885369636163256273_n.png";
         File imageFile = new File(imagePath);
 
-        if(imageFile.exists()) {
+        if (imageFile.exists()) {
             ImageIcon ii = new ImageIcon(imagePath);
             Image image = ii.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_SMOOTH);
             ii = new ImageIcon(image);
@@ -75,15 +72,11 @@ public final class admin_page extends javax.swing.JFrame {
             System.out.println("Image file not found: " + imagePath);
         }
     }
-    
-    
-    
+
     public void showTotalCustomer() {
-        String query = "SELECT COUNT(card_id) AS total FROM genarate_tbl"; 
-        try (Connection con = DriverManager.getConnection(dataConn, username, password);
-             PreparedStatement pst = con.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
-            
+        String query = "SELECT COUNT(card_id) AS total FROM genarate_tbl";
+        try (Connection con = DriverManager.getConnection(dataConn, username, password); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
             if (rs.next()) {
                 int totalCustomers = rs.getInt("Total");
                 jLabel6.setText("Total no. is: " + totalCustomers);
@@ -92,35 +85,33 @@ public final class admin_page extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-        public void showTotalNumberOfSales() {
-            String query = "SELECT SUM(amount) AS total_amount FROM top_up_new";
-        try (Connection con = DriverManager.getConnection(dataConn, username, password);
-             PreparedStatement pst = con.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
-            
+
+    public void showTotalNumberOfSales() {
+        String query = "SELECT SUM(amount) AS total_amount FROM top_up_new";
+        try (Connection con = DriverManager.getConnection(dataConn, username, password); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+
             if (rs.next()) {
-                int totalCustomers = rs.getInt("total_amount");
+                double totalCustomers = rs.getInt("total_amount");
                 totalNumberSales.setText("Total amount is: ₱" + totalCustomers);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void addPlaceHolderStyle(JTextField textField){
+
+    public void addPlaceHolderStyle(JTextField textField) {
         Font font = textField.getFont();
         textField.setFont(font);
         textField.setForeground(Color.gray); //font color
     }
-    
-    public void removePlaceHolderStyle(JTextField textField){
+
+    public void removePlaceHolderStyle(JTextField textField) {
         Font font = textField.getFont();
-        font = font.deriveFont(Font.PLAIN|Font.BOLD);
+        font = font.deriveFont(Font.PLAIN | Font.BOLD);
         textField.setFont(font);
         textField.setForeground(Color.black); //font color
     }
-    
+
     public Font loadFont(String path, float size) {
         try {
             // Create the font from the file
@@ -133,66 +124,66 @@ public final class admin_page extends javax.swing.JFrame {
             return new JLabel().getFont().deriveFont(size);
         }
     }
-    
+
     public void setFontToComponents(Font font) {
-        
+
     }
-    
-    public void showPieChart(){
-      
-      try{
-      Connection conn = DriverManager.getConnection(dataConn, username, password);
-      pst = conn.prepareStatement("SELECT category, COUNT(*) as count FROM genarate_tbl GROUP BY category");
-      rs = pst.executeQuery();
-          
-      //create dataset
-      DefaultPieDataset barDataset = new DefaultPieDataset();
-      
+
+    public void showPieChart() {
+
+        try {
+            Connection conn = DriverManager.getConnection(dataConn, username, password);
+            pst = conn.prepareStatement("SELECT category, COUNT(*) as count FROM genarate_tbl GROUP BY category");
+            rs = pst.executeQuery();
+
+            //create dataset
+            DefaultPieDataset barDataset = new DefaultPieDataset();
+
             while (rs.next()) {
-                  String category = rs.getString("category");
-                  int count = rs.getInt("count");
-                  barDataset.setValue(category, count);
-              }
+                String category = rs.getString("category");
+                int count = rs.getInt("count");
+                barDataset.setValue(category, count);
+            }
 
-              // Create chart
-              JFreeChart pieChart = ChartFactory.createPieChart("Category list", barDataset, true, true, false);
-              
-              // Configure plot
-              PiePlot piePlot = (PiePlot) pieChart.getPlot();
+            // Create chart
+            JFreeChart pieChart = ChartFactory.createPieChart("Category list", barDataset, true, true, false);
 
-              // Optional: Change the colors of the sections if needed
-              piePlot.setSectionPaint("PWD", new Color(255, 255, 102));
-              piePlot.setSectionPaint("Students", new Color(102, 255, 102));
-              piePlot.setSectionPaint("Citizens", new Color(255, 102, 153));
-              piePlot.setSectionPaint("Seniors", new Color(0, 204, 204));
+            // Configure plot
+            PiePlot piePlot = (PiePlot) pieChart.getPlot();
 
-              piePlot.setBackgroundPaint(Color.white);
+            // Optional: Change the colors of the sections if needed
+            piePlot.setSectionPaint("PWD", new Color(255, 255, 102));
+            piePlot.setSectionPaint("Students", new Color(102, 255, 102));
+            piePlot.setSectionPaint("Citizens", new Color(255, 102, 153));
+            piePlot.setSectionPaint("Seniors", new Color(0, 204, 204));
 
-              // Create chart panel to display chart
-              ChartPanel pieChartPanel = new ChartPanel(pieChart);
-              panelBarChart.removeAll();
-              panelBarChart.add(pieChartPanel, BorderLayout.CENTER);
-              panelBarChart.validate();
+            piePlot.setBackgroundPaint(Color.white);
 
-          } catch (SQLException e) {
-              e.printStackTrace();
-          }
-      }
-    
-    public void showTable() throws SQLException{
+            // Create chart panel to display chart
+            ChartPanel pieChartPanel = new ChartPanel(pieChart);
+            panelBarChart.removeAll();
+            panelBarChart.add(pieChartPanel, BorderLayout.CENTER);
+            panelBarChart.validate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showTable() throws SQLException {
         try {
             Connection conn = DriverManager.getConnection(dataConn, username, password);
             pst = conn.prepareStatement("SELECT * FROM genarate_tbl");
             rs = pst.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int n = rsmd.getColumnCount();
-            
+
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             dtm.setRowCount(0);
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Vector show = new Vector();
-                for(int i = 1; i<=n; i++){
+                for (int i = 1; i <= n; i++) {
                     show.add(rs.getString("card_id"));
                     show.add(rs.getString("first_name"));
                     show.add(rs.getString("last_name"));
@@ -203,13 +194,12 @@ public final class admin_page extends javax.swing.JFrame {
                     show.add(rs.getString("register_date"));
                     show.add(rs.getString("category"));
                 }
-                    dtm.addRow(show);
+                dtm.addRow(show);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -226,11 +216,9 @@ public final class admin_page extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         panelBarChart = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        button1 = new printing_system.Button();
+        jLabel1 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -245,6 +233,8 @@ public final class admin_page extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
@@ -263,7 +253,7 @@ public final class admin_page extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(78, 76, 126));
 
         jPanel1.setBackground(new java.awt.Color(78, 76, 126));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jTable1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -302,7 +292,6 @@ public final class admin_page extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(8).setResizable(false);
         }
 
-        panelBarChart.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         panelBarChart.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -311,9 +300,9 @@ public final class admin_page extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBarChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelBarChart, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -346,28 +335,6 @@ public final class admin_page extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(78, 76, 126));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setBackground(new java.awt.Color(78, 76, 126));
-        jButton1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Dashboard");
-        jButton1.setBorder(null);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(78, 76, 126));
-        jButton2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("ID card");
-        jButton2.setBorder(null);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jButton3.setBackground(new java.awt.Color(78, 76, 126));
         jButton3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
@@ -381,39 +348,35 @@ public final class admin_page extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/433462721_1200356788003247_6885369636163256273_n.png"))); // NOI18N
 
-        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user (2).png"))); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Dashboard");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(32, 32, 32))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -432,7 +395,7 @@ public final class admin_page extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(78, 76, 126));
         jButton6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Update");
+        jButton6.setText("History");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -501,7 +464,7 @@ public final class admin_page extends javax.swing.JFrame {
         totalNumberSales.setText("jLabel1");
         totalNumberSales.setPreferredSize(new java.awt.Dimension(42, 48));
         totalNumberSales.setRequestFocusEnabled(false);
-        jPanel6.add(totalNumberSales, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 400, 60));
+        jPanel6.add(totalNumberSales, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 470, 120));
 
         jPanel8.setBackground(new java.awt.Color(255, 153, 0));
 
@@ -515,7 +478,7 @@ public final class admin_page extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,7 +492,7 @@ public final class admin_page extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         jLabel6.setText("25");
-        jPanel9.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 60));
+        jPanel9.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 270, 70));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -543,7 +506,7 @@ public final class admin_page extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -555,8 +518,8 @@ public final class admin_page extends javax.swing.JFrame {
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -567,6 +530,27 @@ public final class admin_page extends javax.swing.JFrame {
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setBackground(new java.awt.Color(78, 76, 126));
+        jButton9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Update card");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(78, 76, 126));
+        jButton2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Add card");
+        jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -581,19 +565,24 @@ public final class admin_page extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_search)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(14, 14, 14)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_search))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -607,10 +596,14 @@ public final class admin_page extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -626,22 +619,18 @@ public final class admin_page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to Exit?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-    if(choice == JOptionPane.YES_OPTION){
-        user_select login = new user_select();
-        login.setVisible(true);
-        login.setLocationRelativeTo(null);
-        this.dispose();
-        System.out.println("Yes is clicked successful.");
-    }else{
-        // if the user click no, do nothing or handle accordingly.
-        System.out.println("No button is clicked");
-         }
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to Exit?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            user_select login = new user_select();
+            login.setVisible(true);
+            login.setLocationRelativeTo(null);
+            this.dispose();
+            System.out.println("Yes is clicked successful.");
+        } else {
+            // if the user click no, do nothing or handle accordingly.
+            System.out.println("No button is clicked");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         top_up tp = new top_up();
@@ -650,46 +639,44 @@ public final class admin_page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int i = jTable1.getSelectedRow();
-        try {
-            if (i >= 0) {
-                model.setValueAt(evt, i, NORMAL);
-            } else {
-                JOptionPane.showMessageDialog(null, "No other rows");
-            }
-        } catch (Exception e) {
-        }
+        history tp = new history();
+        tp.setLocationRelativeTo(null);
+        tp.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
+
         DefaultTableModel tblmodel = (DefaultTableModel) jTable1.getModel();
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to Deactivate?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(choice == JOptionPane.YES_OPTION){
-                tblmodel.removeRow(jTable1.getSelectedRow());
-                Notification noti = new Notification(this, Notifications.Type.SUCCESS, Notification.location.TOP_ROGHT, "Account deactivated succesfully.");
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) {
+            // Display warning message if no row is selected
+            JOptionPane.showMessageDialog(this, "Please select a row to deactivate.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (jTable1.getSelectedRowCount() > 1) {
+            // Display warning message if more than one row is selected
+            JOptionPane.showMessageDialog(this, "Please select only one row to deactivate.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Proceed with confirmation dialog only if a single row is selected
+            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to Deactivate?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                tblmodel.removeRow(selectedRow);
+                Notification noti = new Notification(this, Notifications.Type.SUCCESS, Notification.location.TOP_ROGHT, "Account deactivated successfully.");
                 noti.showNotification();
-        }else{
-            if(jTable1.getSelectedRow() == 0){
-                JOptionPane.showMessageDialog(this, "Table is empty.");
-            }else{
-                JOptionPane.showMessageDialog(this, "Please select single row for delete.");
             }
         }
-        
+
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
         DefaultTableModel defaultTableModel = (DefaultTableModel) jTable1.getModel();
-        TableRowSorter <DefaultTableModel> tableRowSorter = new TableRowSorter<>(defaultTableModel);
+        TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<>(defaultTableModel);
         jTable1.setRowSorter(tableRowSorter);
         tableRowSorter.setRowFilter(RowFilter.regexFilter(txt_search.getText()));
     }//GEN-LAST:event_txt_searchKeyReleased
 
     private void txt_searchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_searchFocusGained
-        if(txt_search.getText().equals("Search data")){
+        if (txt_search.getText().equals("Search data")) {
             txt_search.setText(null);
             txt_search.requestFocus();
             // remove placeholder style
@@ -698,7 +685,7 @@ public final class admin_page extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_searchFocusGained
 
     private void txt_searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_searchFocusLost
-        if(txt_search.getText().length()==0){
+        if (txt_search.getText().length() == 0) {
             //add placeholder style 
             addPlaceHolderStyle(txt_search);
             txt_search.setText("Search data");
@@ -714,12 +701,12 @@ public final class admin_page extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_searchActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
         try {
             Connection conn = DriverManager.getConnection(dataConn, username, password);
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM genarate_tbl", 
-                                                            ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                                                            ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM genarate_tbl",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pst.executeQuery();
 
             rs.last();
@@ -746,11 +733,11 @@ public final class admin_page extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        
+
         try {
             Connection conn = DriverManager.getConnection(dataConn, username, password);
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM genarate_tbl", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -773,25 +760,35 @@ public final class admin_page extends javax.swing.JFrame {
             String[] columnName = {"Card ID", "Firstname", "Lastname", "Username", "Address", "Mobile Number", "Gender", "Register date", "Catagory"};
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setDataVector(rowData, columnName);
-            
+
             Notification noti = new Notification(this, Notifications.Type.SUCCESS, Notification.location.TOP_ROGHT, "Accounts updated.");
             noti.showNotification();
 
             rs.close();
             pst.close();
             conn.close();
-            
+
             showTotalCustomer();
             showPieChart();
             showTotalNumberOfSales();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    
-    
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+
+        try {
+            update_table tp = new update_table();
+            tp.setLocationRelativeTo(null);
+            tp.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(admin_page.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -832,14 +829,14 @@ public final class admin_page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private printing_system.Button button1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

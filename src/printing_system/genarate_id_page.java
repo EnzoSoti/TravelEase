@@ -30,12 +30,9 @@ public class genarate_id_page extends javax.swing.JFrame {
     
     public genarate_id_page() {
         initComponents();
-        
         getContentPane().setBackground(Color.WHITE);
-        
-        
-        Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-Bold.ttf", 14f);
-        setFontToComponents(poppinsFont);
+        //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-Bold.ttf", 14f);
+        //setFontToComponents(poppinsFont);
         randomnumber();
         autoGmail();
         date();
@@ -57,7 +54,8 @@ public class genarate_id_page extends javax.swing.JFrame {
     
     private void setFontToComponents(Font font) {
     
-}
+    }
+    
     
     // auto date format
     public void date(){
@@ -72,6 +70,8 @@ public class genarate_id_page extends javax.swing.JFrame {
         txtusername.setText("@gmail.com");
         txtusername.setEditable(true);
     }
+    
+    
     
    // random id card number 
    public void randomnumber(){
@@ -298,7 +298,7 @@ public class genarate_id_page extends javax.swing.JFrame {
                                     .addComponent(combogender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(combocategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(5, 5, 5)))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -334,6 +334,7 @@ public class genarate_id_page extends javax.swing.JFrame {
                 
                 Statement statement = connection.createStatement();
                 int check = statement.executeUpdate(query);
+                
 
                 if (check == 0) {
                     JOptionPane.showMessageDialog(jButton1, "This is already exist");

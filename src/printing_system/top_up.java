@@ -34,8 +34,8 @@ public class top_up extends javax.swing.JFrame {
     
     public top_up() {
         initComponents();
-        Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
-        setFontToComponents(poppinsFont);
+        //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
+        //setFontToComponents(poppinsFont);
         addPlaceHolderStyle(txt_id);
         addPlaceHolderStyle(txt_amount);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,11 +57,7 @@ public class top_up extends javax.swing.JFrame {
     }
     
     private void setFontToComponents(Font font) {
-        jLabel5.setFont(font);
-        jButton3.setFont(font);
         
-        txt_reciept.setFont(font);
-        receipt_btn.setFont(font);
     }
     
     public void addPlaceHolderStyle(JTextField textField) {
@@ -298,11 +294,11 @@ public class top_up extends javax.swing.JFrame {
             
             txt_reciept.setText("");
             
-            txt_reciept.append("                                70 Regalado Avenue, North Fairview\n");
-            txt_reciept.append("                                      Quezon City, 1121 Metro Manila\n");
-            txt_reciept.append("                                     09454305799, 0440-2984-2210\n");
+            txt_reciept.append("                             70 Regalado Avenue, North Fairview\n");
+            txt_reciept.append("                               Quezon City, 1121 Metro Manila\n");
+            txt_reciept.append("                                  09454305799, 0440-2984-2210\n");
             txt_reciept.append("                                                                        \n");
-            txt_reciept.append("                                        TravelEase Transport Service\n");
+            txt_reciept.append("                                  TravelEase Transport Service\n");
             txt_reciept.append("                                                                        \n");
             
             if (rs.next()) {
@@ -323,8 +319,8 @@ public class top_up extends javax.swing.JFrame {
                 txt_reciept.append("No data found for card ID: ");
             }
             
-            txt_reciept.append("  ------------------------------------------------------\n");
-            txt_reciept.append("                                        Thank you for your business!\n");
+            txt_reciept.append("  ---------------------------------------------------------------------------------------\n");
+            txt_reciept.append("                                Thank you for your business!\n");
             
             // get the current data today.
             LocalDate currentDate = LocalDate.now();
@@ -332,7 +328,7 @@ public class top_up extends javax.swing.JFrame {
             String formattedDate = currentDate.format(formatter);
             
             // Add the date to the txt_receipt which is the textfield.
-            txt_reciept.append("                                                             " + formattedDate);
+            txt_reciept.append("                                               " + formattedDate);
             
             con.close();
             

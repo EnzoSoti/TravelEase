@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import raven.toast.Notifications;
 
+// dracula theme
+
 /**
  *
  * @author Administrator
@@ -29,14 +31,14 @@ public class user_select extends javax.swing.JFrame {
      */
     public user_select() {
         initComponents();
-        Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
-        setFontToComponents(poppinsFont);
+        //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
+        //setFontToComponents(poppinsFont);
         resizedImage();
         resizedImage1();
     }
     
         public void resizedImage(){
-        String imagePath = "C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\images\\433462721_1200356788003247_6885369636163256273_n.png";
+        String imagePath = "C:\\Users\\Administrator\\Desktop\\NetBeansProjects\\LoginSystem\\src\\images\\433462721_1200356788003247_6885369636163256273_n.png";
         File imageFile = new File(imagePath);
 
         if(imageFile.exists()) {
@@ -50,7 +52,7 @@ public class user_select extends javax.swing.JFrame {
     }
         
         public void resizedImage1(){
-        String imagePath = "C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\images\\highway.png";
+        String imagePath = "C:\\Users\\Administrator\\Desktop\\NetBeansProjects\\LoginSystem\\src\\images\\highway.png";
         File imageFile = new File(imagePath);
 
         if(imageFile.exists()) {
@@ -77,6 +79,7 @@ public class user_select extends javax.swing.JFrame {
     }
     
     private void setFontToComponents(Font font) {
+    /*
     jLabel2.setFont(font);
     jLabel3.setFont(font);
     jLabel4.setFont(font);
@@ -88,6 +91,8 @@ public class user_select extends javax.swing.JFrame {
     jButton1.setFont(font);
     jButton3.setFont(font);
     jCheckBox1.setFont(font);
+    */
+   
 }
 
     /**
@@ -116,7 +121,6 @@ public class user_select extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         txtpassword = new javax.swing.JPasswordField();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 255));
@@ -162,6 +166,11 @@ public class user_select extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel5.setText("Username");
 
+        txtusername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtusernameActionPerformed(evt);
+            }
+        });
         txtusername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtusernameKeyPressed(evt);
@@ -210,13 +219,6 @@ public class user_select extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select-", "Admin", "Customer" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Don't have an account yet? Sign up");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -226,7 +228,6 @@ public class user_select extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(81, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -268,8 +269,6 @@ public class user_select extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -312,13 +311,13 @@ public class user_select extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
         
-        Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
+        //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
         
         String username = txtusername.getText();
         String password = txtpassword.getText();
         
-        jLabel4.setFont(poppinsFont);
-        txtusername.setFont(poppinsFont);
+        //jLabel4.setFont(poppinsFont);
+        //txtusername.setFont(poppinsFont);
         
         if(!username.isEmpty() || !password.isEmpty()){
             if(username.equals("admin123") && password.equals("admin123")){
@@ -328,13 +327,15 @@ public class user_select extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(user_select.class.getName()).log(Level.SEVERE, null, ex);
                 }
+               
                chartdash.setVisible(true);
                chartdash.setLocationRelativeTo(null);
+               JOptionPane.showMessageDialog(rootPane, "Admin");
                this.dispose();
                }
             else if(database.isInputInDB(username, password)){
                JOptionPane.showMessageDialog(rootPane, "Welcome Customer");
-               customer_page customerpage = new customer_page();
+               Customer_login_page customerpage = new Customer_login_page(username, password);
                customerpage.setVisible(true);
                customerpage.setLocationRelativeTo(null);
                this.dispose(); 
@@ -351,18 +352,6 @@ public class user_select extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if(jComboBox1.getSelectedItem().equals("Customer")){
-            Customer_login_page customerpage = new Customer_login_page();
-            customerpage.setLocationRelativeTo(null);
-            customerpage.setVisible(true);
-            dispose();
-        }else{
-            jComboBox1.getSelectedItem().equals("Admin");
-            JOptionPane.showMessageDialog(jCheckBox1, "You are now in Admin page.");
-        }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1KeyPressed
@@ -370,13 +359,13 @@ public class user_select extends javax.swing.JFrame {
     private void txtusernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyPressed
         
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
+            //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
         
         String username = txtusername.getText();
         String password = txtpassword.getText();
         
-        jLabel4.setFont(poppinsFont);
-        txtusername.setFont(poppinsFont);
+        //jLabel4.setFont(poppinsFont);
+        //txtusername.setFont(poppinsFont);
         
         if(!username.isEmpty() || !password.isEmpty()){
                 if(username.equals("admin123") && password.equals("admin123")){
@@ -392,9 +381,9 @@ public class user_select extends javax.swing.JFrame {
                    }
                 else if(database.isInputInDB(username, password)){
                    JOptionPane.showMessageDialog(rootPane, "Welcome Customer");
-                   customer_page customerpage = new customer_page();
-                   customerpage.setVisible(true);
-                   customerpage.setLocationRelativeTo(null);
+                   Customer_login_page pg = new Customer_login_page(username, password);
+                   pg.setVisible(true);
+                   pg.setLocationRelativeTo(null);
                    this.dispose(); 
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "Wrong email/password.\nTry Again.", "Error", 
@@ -409,13 +398,13 @@ public class user_select extends javax.swing.JFrame {
 
     private void txtpasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasswordKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
+            //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
         
         String username = txtusername.getText();
         String password = txtpassword.getText();
         
-        jLabel4.setFont(poppinsFont);
-        txtusername.setFont(poppinsFont);
+        //jLabel4.setFont(poppinsFont);
+        //txtusername.setFont(poppinsFont);
         
         if(!username.isEmpty() || !password.isEmpty()){
                 if(username.equals("admin123") && password.equals("admin123")){
@@ -431,7 +420,7 @@ public class user_select extends javax.swing.JFrame {
                    }
                 else if(database.isInputInDB(username, password)){
                    JOptionPane.showMessageDialog(rootPane, "Welcome Customer");
-                   customer_page customerpage = new customer_page();
+                   Customer_login_page customerpage = new Customer_login_page(username, password);
                    customerpage.setVisible(true);
                    customerpage.setLocationRelativeTo(null);
                    this.dispose(); 
@@ -445,6 +434,10 @@ public class user_select extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtpasswordKeyPressed
+
+    private void txtusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtusernameActionPerformed
     
     
     
@@ -492,7 +485,6 @@ public class user_select extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

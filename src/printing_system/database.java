@@ -17,7 +17,7 @@ public class database {
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/printing_db", "root", "PHW#84#jeor");
             Statement statement = connection.createStatement();
-            String sql = "SELECT Email_address,Password FROM login";
+            String sql = "SELECT Email_address,Password FROM login_with_cardid";
             ResultSet result  = statement.executeQuery(sql);
             while(result.next()){
                 if(result.getString(1).equalsIgnoreCase(username) && result.getString(2).equals(password)){
