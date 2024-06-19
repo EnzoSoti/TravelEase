@@ -19,8 +19,8 @@ public class register extends javax.swing.JFrame {
     
     public register() {
         initComponents();
-        Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
-        setFontToComponents(poppinsFont);
+        //Font poppinsFont = loadFont("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\LoginSystem\\src\\printing_system\\Poppins-SemiBold.ttf", 14f);
+        //setFontToComponents(poppinsFont);
         autoGmail();
         randomnumber();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Did not close the entire screen.
